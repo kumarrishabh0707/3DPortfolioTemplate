@@ -6,7 +6,7 @@ var Colors = {
     brownDark:0x23190f,
     pink:0xF5986E,
     yellow:0xf4ce93,
-    blue:0x68c3c0,
+    blue:0x212121,
 
 };
 
@@ -107,7 +107,7 @@ function createScene() {
 
   scene = new THREE.Scene();
   aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 50;
+  fieldOfView = 90;
   nearPlane = .1;
   farPlane = 10000;
   camera = new THREE.PerspectiveCamera(
@@ -118,7 +118,7 @@ function createScene() {
     );
   scene.fog = new THREE.Fog(0xf7d9aa, 100,950);
   camera.position.x = 0;
-  camera.position.z = 200;
+  camera.position.z = 300;
   camera.position.y = game.planeDefaultHeight;
   //camera.lookAt(new THREE.Vector3(0, 400, 0));
 
