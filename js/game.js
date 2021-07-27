@@ -56,7 +56,7 @@ function resetGame(){
           planeCollisionDisplacementY:0,
           planeCollisionSpeedY:0,
 
-          seaRadius:600,
+          seaRadius:900,
           seaLength:800,
           //seaRotationSpeed:0.006,
           wavesMinAmp : 5,
@@ -107,7 +107,7 @@ function createScene() {
 
   scene = new THREE.Scene();
   aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 90;
+  fieldOfView = 60;
   nearPlane = .1;
   farPlane = 10000;
   camera = new THREE.PerspectiveCamera(
@@ -186,11 +186,11 @@ var ambientLight, hemisphereLight, shadowLight;
 
 function createLights() {
 
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9)
+  hemisphereLight = new THREE.HemisphereLight(0xffffff,0x212121, 1)
 
   ambientLight = new THREE.AmbientLight(0xdc8874, .5);
 
-  shadowLight = new THREE.DirectionalLight(0xffffff, .9);
+  shadowLight = new THREE.DirectionalLight(0xffffff, 1.2);
   shadowLight.position.set(150, 350, 350);
   shadowLight.castShadow = true;
   shadowLight.shadow.camera.left = -400;
@@ -477,7 +477,7 @@ Sky.prototype.moveClouds = function(){
 }
 
 Sea = function(){
-  var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,40,10);
+  var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
   geom.mergeVertices();
   var l = geom.vertices.length;
@@ -525,7 +525,7 @@ Sea.prototype.moveWaves = function (){
 Cloud = function(){
   this.mesh = new THREE.Object3D();
   this.mesh.name = "cloud";
-  var geom = new THREE.CubeGeometry(20,20,20);
+  var geom = new THREE.SphereGeometry(20,20,20);
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.white,
 
