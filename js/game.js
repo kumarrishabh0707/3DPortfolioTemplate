@@ -116,7 +116,7 @@ function createScene() {
     nearPlane,
     farPlane
     );
-  scene.fog = new THREE.Fog(0xf7d9aa, 100,950);
+  scene.fog = new THREE.Fog(0x333021, 100,950);
   camera.position.x = 0;
   camera.position.z = 300;
   camera.position.y = game.planeDefaultHeight;
