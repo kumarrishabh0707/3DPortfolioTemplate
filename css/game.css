@@ -160,6 +160,13 @@
 	white-space: nowrap;
 }
 
+.bottomclass {
+	width: 100%;
+    float: left;
+    position: fixed;
+    bottom: 0;
+  }
+
 @-webkit-keyframes blinking {
 	0% { opacity: 1; }
 	50% { opacity: 0; }
