@@ -19,7 +19,7 @@
 	left: 0;
 	width: 100%;
 	text-align: center;
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 
 .header h1 {
