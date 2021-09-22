@@ -1,3 +1,4 @@
+
 //COLORS
 var Colors = {
     red:0xf25346,
@@ -476,6 +477,8 @@ Sky.prototype.moveClouds = function(){
   this.mesh.rotation.z += game.speed*deltaTime;
 
 }
+
+// const loader = OBJLoader();
 
 Sea = function(){
   var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
@@ -976,6 +979,8 @@ function normalize(v,vmin,vmax,tmin, tmax){
 // var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 
 function init(event){
+
+  // console.log(loader);
 
   // UI
 
