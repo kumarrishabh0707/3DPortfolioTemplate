@@ -1,4 +1,7 @@
-
+import {OBJLoader} from "../examples/jsm/loaders/OBJLoader.js";
+import {FBXLoader} from "../examples/jsm/loaders/FBXLoader.js";
+import {GLTFLoader} from "../examples/jsm/loaders/GLTFLoader.js";
+// import * as THREE from "../js/three.min.js"
 //COLORS
 var Colors = {
     red:0xf25346,
@@ -22,6 +25,12 @@ var oldTime = new Date().getTime();
 var ennemiesPool = [];
 var particlesPool = [];
 var particlesInUse = [];
+
+var sky;
+let INTERSECTED, raycaster;
+
+let pointer = new THREE.Vector2();
+// var cloud;
 
 function resetGame(){
   game = {speed:0,
@@ -157,7 +166,11 @@ function handleWindowResize() {
 function handleMouseMove(event) {
   var tx = -1 + (event.clientX / WIDTH)*2;
   var ty = 1 - (event.clientY / HEIGHT)*2;
+  // tx = Math.abs(0.5-ty);
   mousePos = {x:tx, y:ty};
+
+  pointer.x = tx;
+  pointer.y = ty;
 }
 
 function handleTouchMove(event) {
@@ -168,10 +181,10 @@ function handleTouchMove(event) {
 }
 
 function handleMouseUp(event){
-  if (game.status == "waitingReplay"){
-    resetGame();
-    hideReplay();
-  }
+  // if (game.status == "waitingReplay"){
+  //   resetGame();
+  //   hideReplay();
+  // }
 }
 
 
@@ -204,9 +217,9 @@ function createLights() {
   shadowLight.shadow.mapSize.width = 4096;
   shadowLight.shadow.mapSize.height = 4096;
 
-  var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
+  // var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
 
-  scene.add(ch);
+  // scene.add(ch);
   scene.add(hemisphereLight);
   scene.add(shadowLight);
   scene.add(ambientLight);
@@ -312,14 +325,14 @@ var AirPlane = function(){
   var geomCabin = new THREE.BoxGeometry(80,50,50,1,1,1);
   var matCabin = new THREE.MeshPhongMaterial({color:Colors.goldenyellow, shading:THREE.FlatShading});
 
-  geomCabin.vertices[4].y-=10;
-  geomCabin.vertices[4].z+=20;
-  geomCabin.vertices[5].y-=10;
-  geomCabin.vertices[5].z-=20;
-  geomCabin.vertices[6].y+=30;
-  geomCabin.vertices[6].z+=20;
-  geomCabin.vertices[7].y+=30;
-  geomCabin.vertices[7].z-=20;
+  // geomCabin.vertices[4].y-=10;
+  // geomCabin.vertices[4].z+=20;
+  // geomCabin.vertices[5].y-=10;
+  // geomCabin.vertices[5].z-=20;
+  // geomCabin.vertices[6].y+=30;
+  // geomCabin.vertices[6].z+=20;
+  // geomCabin.vertices[7].y+=30;
+  // geomCabin.vertices[7].z-=20;
 
   var cabin = new THREE.Mesh(geomCabin, matCabin);
   cabin.castShadow = true;
@@ -367,14 +380,14 @@ var AirPlane = function(){
   this.mesh.add(windshield);
 
   var geomPropeller = new THREE.BoxGeometry(20,10,10,1,1,1);
-  geomPropeller.vertices[4].y-=5;
-  geomPropeller.vertices[4].z+=5;
-  geomPropeller.vertices[5].y-=5;
-  geomPropeller.vertices[5].z-=5;
-  geomPropeller.vertices[6].y+=5;
-  geomPropeller.vertices[6].z+=5;
-  geomPropeller.vertices[7].y+=5;
-  geomPropeller.vertices[7].z-=5;
+  // geomPropeller.vertices[4].y-=5;
+  // geomPropeller.vertices[4].z+=5;
+  // geomPropeller.vertices[5].y-=5;
+  // geomPropeller.vertices[5].z-=5;
+  // geomPropeller.vertices[6].y+=5;
+  // geomPropeller.vertices[6].z+=5;
+  // geomPropeller.vertices[7].y+=5;
+  // geomPropeller.vertices[7].z-=5;
   var matPropeller = new THREE.MeshPhongMaterial({color:Colors.brown, shading:THREE.FlatShading});
   this.propeller = new THREE.Mesh(geomPropeller, matPropeller);
 
@@ -449,13 +462,14 @@ var AirPlane = function(){
 
 };
 
-Sky = function(){
+var Sky = function(){
   this.mesh = new THREE.Object3D();
   this.nClouds = 20;
   this.clouds = [];
   var stepAngle = Math.PI*2 / this.nClouds;
   for(var i=0; i<this.nClouds; i++){
     var c = new Cloud();
+    c.name = "Custom Obj";
     this.clouds.push(c);
     var a = stepAngle*i;
     var h = game.seaRadius + 150 + Math.random()*200;
@@ -480,53 +494,54 @@ Sky.prototype.moveClouds = function(){
 
 // const loader = OBJLoader();
 
-Sea = function(){
-  var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
-  geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
-  geom.mergeVertices();
-  var l = geom.vertices.length;
+// var Sea = function(){
+//   var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
+//   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+//   // geom.mergeVertices();
+//   // var l = geom.vertices.length;
 
-  this.waves = [];
 
-  for (var i=0;i<l;i++){
-    var v = geom.vertices[i];
-    //v.y = Math.random()*30;
-    this.waves.push({y:v.y,
-                     x:v.x,
-                     z:v.z,
-                     ang:Math.random()*Math.PI*2,
-                     amp:game.wavesMinAmp + Math.random()*(game.wavesMaxAmp-game.wavesMinAmp),
-                     speed:game.wavesMinSpeed + Math.random()*(game.wavesMaxSpeed - game.wavesMinSpeed)
-                    });
-  };
-  var mat = new THREE.MeshPhongMaterial({
-    color:Colors.blue,
-    transparent:true,
-    opacity:.8,
-    shading:THREE.FlatShading,
+//   this.waves = [];
 
-  });
+//   for (var i=0;i<l;i++){
+//     var v = geom.vertices[i];
+//     //v.y = Math.random()*30;
+//     this.waves.push({y:v.y,
+//                      x:v.x,
+//                      z:v.z,
+//                      ang:Math.random()*Math.PI*2,
+//                      amp:game.wavesMinAmp + Math.random()*(game.wavesMaxAmp-game.wavesMinAmp),
+//                      speed:game.wavesMinSpeed + Math.random()*(game.wavesMaxSpeed - game.wavesMinSpeed)
+//                     });
+//   };
+//   var mat = new THREE.MeshPhongMaterial({
+//     color:Colors.blue,
+//     transparent:true,
+//     opacity:.8,
+//     shading:THREE.FlatShading,
 
-  this.mesh = new THREE.Mesh(geom, mat);
-  this.mesh.name = "waves";
-  this.mesh.receiveShadow = true;
+//   });
 
-}
+//   this.mesh = new THREE.Mesh(geom, mat);
+//   this.mesh.name = "waves";
+//   this.mesh.receiveShadow = true;
 
-Sea.prototype.moveWaves = function (){
-  var verts = this.mesh.geometry.vertices;
-  var l = verts.length;
-  for (var i=0; i<l; i++){
-    var v = verts[i];
-    var vprops = this.waves[i];
-    v.x =  vprops.x + Math.cos(vprops.ang)*vprops.amp;
-    v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
-    vprops.ang += vprops.speed*deltaTime;
-    this.mesh.geometry.verticesNeedUpdate=true;
-  }
-}
+// }
 
-Cloud = function(){
+// Sea.prototype.moveWaves = function (){
+//   var verts = this.mesh.geometry.vertices;
+//   var l = verts.length;
+//   for (var i=0; i<l; i++){
+//     var v = verts[i];
+//     var vprops = this.waves[i];
+//     v.x =  vprops.x + Math.cos(vprops.ang)*vprops.amp;
+//     v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
+//     vprops.ang += vprops.speed*deltaTime;
+//     this.mesh.geometry.verticesNeedUpdate=true;
+//   }
+// }
+
+var Cloud = function(){
   this.mesh = new THREE.Object3D();
   this.mesh.name = "cloud";
   var geom = new THREE.SphereGeometry(20,20,20);
@@ -777,15 +792,49 @@ function createPlane(){
 }
 
 function createSea(){
-  sea = new Sea();
-  sea.mesh.position.y = -game.seaRadius;
-  scene.add(sea.mesh);
+  // sea = new Sea();
+  // sea.mesh.position.y = -game.seaRadius;
+  // scene.add(sea.mesh);
+
+
+  const loader = new OBJLoader();
+  loader.load("./js/rishab2.3.obj", (root) => {
+    // obj = root.scene;
+    root.name = "Custom Obj"
+    // root.children[0].rotation.x = 50
+    // console.log("Loaded Successfully");
+    // console.log(root)
+    // console.log(root.children)
+    // console.log(root.scene);
+    // let obj = new THREE.Mesh(root.children[0]);
+    // let obj = new THREE.Object3D(root)
+    // for (let i = 0; i > -1; i++) {
+
+    // }
+    // obj = root.children[0];
+    // sea.mesh;
+    // obj.set
+    // console.log(root.scene)
+    sea = root
+    sea.scale.x = 40
+    sea.scale.y = 40
+    sea.scale.z = 10
+    sea.position.z = -50
+    sea.position.y = -540
+    // console.log(sea.mesh)
+    scene.add(sea);
+    // scene.add(sea.mesh)
+  })
 }
 
 function createSky(){
   sky = new Sky();
   sky.mesh.position.y = -game.seaRadius;
   scene.add(sky.mesh);
+
+
+  setRaycaster();
+
 }
 
 // function createCoins(){
@@ -873,9 +922,9 @@ function loop(){
 
 
   airplane.propeller.rotation.x +=.2 + game.planeSpeed * deltaTime*.005;
-  sea.mesh.rotation.z += game.speed*deltaTime;//*game.seaRotationSpeed;
+  // sea.mesh.rotation.z += game.speed*deltaTime;//*game.seaRotationSpeed;
 
-  if ( sea.mesh.rotation.z > 2*Math.PI)  sea.mesh.rotation.z -= 2*Math.PI;
+  // if ( sea.mesh.rotation.z > 2*Math.PI)  sea.mesh.rotation.z -= 2*Math.PI;
 
   ambientLight.intensity += (.5 - ambientLight.intensity)*deltaTime*0.005;
 
@@ -883,7 +932,18 @@ function loop(){
   // ennemiesHolder.rotateEnnemies();
 
   sky.moveClouds();
-  sea.moveWaves();
+  // sea.moveWaves();
+
+  raycaster.setFromCamera( pointer, camera );
+  const intersects = raycaster.intersectObjects( scene.children, true );
+  if ( intersects.length > 0 ) {
+    // for (let i = 0; i < intersects.length; i ++){
+    //   if (intersects[i].object.name == "Custom Obj") console.log("Found");
+    //   console.log(intersects[i].object.name)
+    // }
+    // console.log(intersects.length);
+
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
@@ -929,6 +989,9 @@ function loop(){
 
 
 function updatePlane(){
+if (sea != undefined){
+  sea.rotation.z += 0.0005 * deltaTime * mousePos.x;
+}
 
   game.planeSpeed = normalize(mousePos.x,-.5,.5,game.planeMinSpeed, game.planeMaxSpeed);
   var targetY = normalize(mousePos.y,-.75,.75,game.planeDefaultHeight-game.planeAmpHeight, game.planeDefaultHeight+game.planeAmpHeight);
@@ -947,7 +1010,7 @@ function updatePlane(){
   airplane.mesh.rotation.z = (targetY-airplane.mesh.position.y)*deltaTime*game.planeRotXSensivity;
   airplane.mesh.rotation.x = (airplane.mesh.position.y-targetY)*deltaTime*game.planeRotZSensivity;
   var targetCameraZ = normalize(game.planeSpeed, game.planeMinSpeed, game.planeMaxSpeed, game.cameraNearPos, game.cameraFarPos);
-  camera.fov = normalize(mousePos.x,-1,1,40, 80);
+  camera.fov = normalize(Math.abs(mousePos.x),-1,1,40, 80);
   camera.updateProjectionMatrix ()
   camera.position.y += (airplane.mesh.position.y - camera.position.y)*deltaTime*game.cameraSensivity;
 
@@ -978,6 +1041,10 @@ function normalize(v,vmin,vmax,tmin, tmax){
 
 // var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 
+function setRaycaster(){
+  raycaster = new THREE.Raycaster();
+}
+
 function init(event){
 
   // console.log(loader);
@@ -1005,6 +1072,10 @@ function init(event){
   document.addEventListener('touchmove', handleTouchMove, false);
   document.addEventListener('mouseup', handleMouseUp, false);
   document.addEventListener('touchend', handleTouchEnd, false);
+
+  // console.log(THREE.OBJLoader)
+
+// import {FBXLoader} from "../examples/jsm/loaders/FBXLoader";
 
   loop();
 }
