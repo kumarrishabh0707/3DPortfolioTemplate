@@ -52,7 +52,7 @@ function resetGame(){
           // distanceForLevelUpdate:1000,
 
           planeDefaultHeight:100,
-          planeAmpHeight:80,
+          planeAmpHeight:50,
           planeAmpWidth:75,
           planeMoveSensivity:0.005,
           planeRotXSensivity:0.0008,
@@ -129,7 +129,7 @@ function createScene() {
     );
   scene.fog = new THREE.Fog(0x333021, 100,950);
   camera.position.x = 0;
-  camera.position.z = 300;
+  camera.position.z = 200;
   camera.position.y = game.planeDefaultHeight;
   //camera.lookAt(new THREE.Vector3(0, 400, 0));
 
@@ -798,7 +798,7 @@ function createSea(){
 
 
   const loader = new GLTFLoader();
-  loader.load("./js/rishab4.glb", (root) => {
+  loader.load("./js/rishab3.2.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
@@ -820,7 +820,7 @@ function createSea(){
     // sea.scale.y = 40
     // sea.scale.z = 10
     sea.position.z = -50
-    sea.position.y = -540
+    sea.position.y = -580
     // console.log(sea.mesh)
     scene.add(sea);
     // scene.add(sea.mesh)
