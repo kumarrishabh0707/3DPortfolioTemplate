@@ -26,8 +26,12 @@ var ennemiesPool = [];
 var particlesPool = [];
 var particlesInUse = [];
 
+var screens = [];
+var selected_screen = "";
+
 var sky;
 let INTERSECTED, raycaster;
+var mixer;
 
 let pointer = new THREE.Vector2();
 // var cloud;
@@ -181,10 +185,27 @@ function handleTouchMove(event) {
 }
 
 function handleMouseUp(event){
-  // if (game.status == "waitingReplay"){
-  //   resetGame();
-  //   hideReplay();
-  // }
+  if (selected_screen == "Mood_Indigo") {
+    window.open('https://rishabhkumar.design/mood-indigo-interaction-design/', '_blank');
+  }
+  else if (selected_screen == "Microsoft") {
+    window.open('https://rishabhkumar.design/insight-summer-blog/', '_blank');
+  }
+  else if (selected_screen == "Kakshasaathi") {
+    window.open('https://rishabhkumar.design/project-kakshasaathi/', '_blank');
+  }
+  else if (selected_screen == "EZWork") {
+    window.open('https://rishabhkumar.design/ezwork-service-design/', '_blank');
+  }
+  else if (selected_screen == "Sailaab") {
+    window.open('https://rishabhkumar.design/sailaab/', '_blank');
+  }
+  else if (selected_screen == "MIDI") {
+    window.open('https://rishabhkumar.design/implementing-articulations-in-digital-music-input-through-keyboard-and-smartphone-input/', '_blank');
+  }
+  else if (selected_screen == "Website") {
+    window.open('https://rishabhkumar.design/', '_blank');
+  }
 }
 
 
@@ -217,9 +238,9 @@ function createLights() {
   shadowLight.shadow.mapSize.width = 4096;
   shadowLight.shadow.mapSize.height = 4096;
 
-  // var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
+  var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
 
-  // scene.add(ch);
+  scene.add(ch);
   scene.add(hemisphereLight);
   scene.add(shadowLight);
   scene.add(ambientLight);
@@ -798,7 +819,7 @@ function createSea(){
 
 
   const loader = new GLTFLoader();
-  loader.load("./js/rishab3.2.glb", (root) => {
+  loader.load("./js/rishab3.6.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
@@ -823,6 +844,12 @@ function createSea(){
     sea.position.y = -580
     // console.log(sea.mesh)
     scene.add(sea);
+    mixer = new THREE.AnimationMixer(root.scene); 
+    for (let i = 0; i < root.animations.length; i++) {
+      let action = mixer.clipAction( root.animations[i]);
+      action.play();
+    }
+    // console.log(root.animations)
     // scene.add(sea.mesh)
   })
 }
@@ -868,6 +895,10 @@ function loop(){
   newTime = new Date().getTime();
   deltaTime = newTime-oldTime;
   oldTime = newTime;
+  if ( mixer ) {
+    mixer.update( deltaTime / 1000 );
+    // console.log("Here")
+  }
 
   if (game.status=="playing"){
 
@@ -937,12 +968,92 @@ function loop(){
   raycaster.setFromCamera( pointer, camera );
   const intersects = raycaster.intersectObjects( scene.children, true );
   if ( intersects.length > 0 ) {
+    let flag = false;
     for (let i = 0; i < intersects.length; i ++){
-      if (intersects[i].object.name == "Custom Obj") console.log("Found");
-      console.log(intersects[i].object.name)
+      // console.log(screens)
+      // if (intersects[i].object.name == "Custom Obj") console.log("Found");
+      if (intersects[i].object.name == "Mood_Indigo") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "Mood_Indigo";
+        flag = true;
+      }
+      else if (intersects[i].object.name == "Kakshasaathi") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "Kakshasaathi";
+      }
+      else if (intersects[i].object.name == "MIDI") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "MIDI";
+      }
+      else if (intersects[i].object.name == "Microsoft") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "Microsoft";
+      }
+      else if (intersects[i].object.name == "EZWork") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "EZWork";
+      }
+      else if (intersects[i].object.name == "Sailaab") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "Sailaab";
+      }
+      else if (intersects[i].object.name == "Website") {
+        intersects[i].object.material.opacity = 0.2;
+        if (!screens.includes(intersects[i].object)) {
+          screens.push(intersects[i].object);
+        }
+        flag = true;
+
+    document.body.style.cursor = 'pointer';
+        selected_screen = "Website";
+      }
+      else {
+      }
+
+      // console.log(intersects[i].object.name)
     }
     // console.log(intersects.length);
-
+  } 
+  else {
+    document.body.style.cursor = 'default';
+    for (let j = 0; j < screens.length; j ++) {
+      screens[j].material.opacity = 1;
+    }
   }
 
   renderer.render(scene, camera);
