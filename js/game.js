@@ -494,52 +494,52 @@ Sky.prototype.moveClouds = function(){
 
 // const loader = OBJLoader();
 
-// var Sea = function(){
-//   var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
-//   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
-//   // geom.mergeVertices();
-//   // var l = geom.vertices.length;
+var Sea = function(){
+  var geom = new THREE.CylinderGeometry(game.seaRadius,game.seaRadius,game.seaLength,50,10);
+  geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+  // geom.mergeVertices();
+  // var l = geom.vertices.length;
 
 
-//   this.waves = [];
+  // this.waves = [];
 
-//   for (var i=0;i<l;i++){
-//     var v = geom.vertices[i];
-//     //v.y = Math.random()*30;
-//     this.waves.push({y:v.y,
-//                      x:v.x,
-//                      z:v.z,
-//                      ang:Math.random()*Math.PI*2,
-//                      amp:game.wavesMinAmp + Math.random()*(game.wavesMaxAmp-game.wavesMinAmp),
-//                      speed:game.wavesMinSpeed + Math.random()*(game.wavesMaxSpeed - game.wavesMinSpeed)
-//                     });
-//   };
-//   var mat = new THREE.MeshPhongMaterial({
-//     color:Colors.blue,
-//     transparent:true,
-//     opacity:.8,
-//     shading:THREE.FlatShading,
+  // for (var i=0;i<l;i++){
+  //   var v = geom.vertices[i];
+  //   //v.y = Math.random()*30;
+  //   this.waves.push({y:v.y,
+  //                    x:v.x,
+  //                    z:v.z,
+  //                    ang:Math.random()*Math.PI*2,
+  //                    amp:game.wavesMinAmp + Math.random()*(game.wavesMaxAmp-game.wavesMinAmp),
+  //                    speed:game.wavesMinSpeed + Math.random()*(game.wavesMaxSpeed - game.wavesMinSpeed)
+  //                   });
+  // };
+  var mat = new THREE.MeshPhongMaterial({
+    color:Colors.blue,
+    transparent:true,
+    opacity:.8,
+    shading:THREE.FlatShading,
 
-//   });
+  });
 
-//   this.mesh = new THREE.Mesh(geom, mat);
-//   this.mesh.name = "waves";
-//   this.mesh.receiveShadow = true;
+  this.mesh = new THREE.Mesh(geom, mat);
+  this.mesh.name = "waves";
+  this.mesh.receiveShadow = true;
 
-// }
+}
 
-// Sea.prototype.moveWaves = function (){
-//   var verts = this.mesh.geometry.vertices;
-//   var l = verts.length;
-//   for (var i=0; i<l; i++){
-//     var v = verts[i];
-//     var vprops = this.waves[i];
-//     v.x =  vprops.x + Math.cos(vprops.ang)*vprops.amp;
-//     v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
-//     vprops.ang += vprops.speed*deltaTime;
-//     this.mesh.geometry.verticesNeedUpdate=true;
-//   }
-// }
+Sea.prototype.moveWaves = function (){
+  var verts = this.mesh.geometry.vertices;
+  var l = verts.length;
+  for (var i=0; i<l; i++){
+    var v = verts[i];
+    var vprops = this.waves[i];
+    v.x =  vprops.x + Math.cos(vprops.ang)*vprops.amp;
+    v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
+    vprops.ang += vprops.speed*deltaTime;
+    this.mesh.geometry.verticesNeedUpdate=true;
+  }
+}
 
 var Cloud = function(){
   this.mesh = new THREE.Object3D();
@@ -797,13 +797,13 @@ function createSea(){
   // scene.add(sea.mesh);
 
 
-  const loader = new OBJLoader();
-  loader.load("./js/rishab2.3.obj", (root) => {
+  const loader = new GLTFLoader();
+  loader.load("./js/rishab4.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
-    // console.log("Loaded Successfully");
-    // console.log(root)
+    console.log("Loaded Successfully");
+    console.log(root)
     // console.log(root.children)
     // console.log(root.scene);
     // let obj = new THREE.Mesh(root.children[0]);
@@ -815,10 +815,10 @@ function createSea(){
     // sea.mesh;
     // obj.set
     // console.log(root.scene)
-    sea = root
-    sea.scale.x = 40
-    sea.scale.y = 40
-    sea.scale.z = 10
+    sea = root.scene
+    // sea.scale.x = 40
+    // sea.scale.y = 40
+    // sea.scale.z = 10
     sea.position.z = -50
     sea.position.y = -540
     // console.log(sea.mesh)
@@ -937,10 +937,10 @@ function loop(){
   raycaster.setFromCamera( pointer, camera );
   const intersects = raycaster.intersectObjects( scene.children, true );
   if ( intersects.length > 0 ) {
-    // for (let i = 0; i < intersects.length; i ++){
-    //   if (intersects[i].object.name == "Custom Obj") console.log("Found");
-    //   console.log(intersects[i].object.name)
-    // }
+    for (let i = 0; i < intersects.length; i ++){
+      if (intersects[i].object.name == "Custom Obj") console.log("Found");
+      console.log(intersects[i].object.name)
+    }
     // console.log(intersects.length);
 
   }
