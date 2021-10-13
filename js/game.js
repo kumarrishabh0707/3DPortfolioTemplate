@@ -489,7 +489,7 @@ var AirPlane = function(){
 
 var Sky = function(){
   this.mesh = new THREE.Object3D();
-  this.nClouds = 20;
+  this.nClouds = 30;
   this.clouds = [];
   var stepAngle = Math.PI*2 / this.nClouds;
   for(var i=0; i<this.nClouds; i++){
@@ -1111,10 +1111,9 @@ if (sea != undefined){
   game.planeSpeed = normalize(mousePos.x,-.5,.5,game.planeMinSpeed, game.planeMaxSpeed);
   var targetY = normalize(mousePos.y,-.75,.75,game.planeDefaultHeight-game.planeAmpHeight, game.planeDefaultHeight+game.planeAmpHeight);
   var targetX = normalize(mousePos.x,-1,1,-game.planeAmpWidth*.7, -game.planeAmpWidth);
-  
+
   game.planeCollisionDisplacementX += game.planeCollisionSpeedX;
   targetX += game.planeCollisionDisplacementX;
-
 
   game.planeCollisionDisplacementY += game.planeCollisionSpeedY;
   targetY += game.planeCollisionDisplacementY;
