@@ -79,8 +79,8 @@ function resetGame(){
           wavesMinSpeed : 0.001,
           wavesMaxSpeed : 0.003,
 
-          cameraFarPos:500,
-          cameraNearPos:150,
+          cameraFarPos:750,
+          cameraNearPos:200,
           cameraSensivity:0.002,
 
           // coinDistanceTolerance:15,
@@ -122,7 +122,7 @@ function createScene() {
 
   scene = new THREE.Scene();
   aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 60;
+  fieldOfView = 45;
   nearPlane = .1;
   farPlane = 10000;
   camera = new THREE.PerspectiveCamera(
@@ -132,8 +132,8 @@ function createScene() {
     farPlane
     );
   scene.fog = new THREE.Fog(0x333021, 100,950);
-  camera.position.x = 0;
-  camera.position.z = 200;
+  camera.position.x = 50;
+  camera.position.z = 250;
   camera.position.y = game.planeDefaultHeight;
   //camera.lookAt(new THREE.Vector3(0, 400, 0));
 
