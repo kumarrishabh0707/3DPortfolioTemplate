@@ -242,9 +242,9 @@ function createLights() {
   shadowLight.shadow.mapSize.width = 4096;
   shadowLight.shadow.mapSize.height = 4096;
 
-  var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
+  // var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
 
-  scene.add(ch);
+  // scene.add(ch);
   scene.add(hemisphereLight);
   scene.add(shadowLight);
   scene.add(ambientLight);
@@ -823,7 +823,7 @@ function createSea(){
 
 
   const loader = new GLTFLoader();
-  loader.load("./js/rishab3.8.glb", (root) => {
+  loader.load("./js/rishab3.9.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
@@ -1154,7 +1154,7 @@ function normalize(v,vmin,vmax,tmin, tmax){
   return tv;
 }
 
-// var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
+// var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;help
 
 function setRaycaster(){
   raycaster = new THREE.Raycaster();

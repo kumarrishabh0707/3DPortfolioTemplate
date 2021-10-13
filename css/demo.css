@@ -29,12 +29,6 @@ a {
 	outline: none;
 }
 
-a:hover,
-a:focus {
-	color: #4ec2d6;
-	outline: none;
-}
-
 .hidden {
 	opacity:0;
   }
@@ -60,6 +54,12 @@ a:focus {
 	top:-0.14em;
 	left:10px;
   }
+
+a:hover,
+a:focus {
+	color: #4ec2d6;
+	outline: none;
+}
 
 /* Top Navigation Style */
 
