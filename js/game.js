@@ -225,6 +225,10 @@ function createLights() {
   hemisphereLight = new THREE.HemisphereLight(0xffffff,0x212121, 1)
 
   ambientLight = new THREE.AmbientLight(0xdc8874, .5);
+  
+  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 0.9);
+  ambientLight = new THREE.AmbientLight(0xdc8874, 0.5);
+  shadowLight = new THREE.DirectionalLight(0xffffff, 1);  
 
   shadowLight = new THREE.DirectionalLight(0xffffff, 1.2);
   shadowLight.position.set(150, 350, 350);
@@ -819,7 +823,7 @@ function createSea(){
 
 
   const loader = new GLTFLoader();
-  loader.load("./js/rishab3.6.glb", (root) => {
+  loader.load("./js/rishab3.7.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
