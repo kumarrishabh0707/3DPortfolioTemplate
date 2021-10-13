@@ -823,7 +823,7 @@ function createSea(){
 
 
   const loader = new GLTFLoader();
-  loader.load("./js/rishab3.7.glb", (root) => {
+  loader.load("./js/rishab3.8.glb", (root) => {
     // obj = root.scene;
     root.name = "Custom Obj"
     // root.children[0].rotation.x = 50
