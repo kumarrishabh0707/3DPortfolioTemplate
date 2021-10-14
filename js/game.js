@@ -1055,6 +1055,7 @@ function loop(){
   } 
   else {
     document.body.style.cursor = 'default';
+    selected_screen = "";
     for (let j = 0; j < screens.length; j ++) {
       screens[j].material.opacity = 1;
     }
@@ -1107,6 +1108,17 @@ function updatePlane(){
 if (sea != undefined){
   sea.rotation.z += 0.0005 * deltaTime * mousePos.x;
 }
+  if (airplane != undefined){
+    if(mousePos.x<0)
+    {
+      airplane.mesh.rotation.y = - Math.PI;
+      console.log(airplane.mesh.rotation.y)
+    }
+    else{
+      airplane.mesh.rotation.y = 0;
+      console.log(airplane.mesh.rotation.y);
+    }
+  }
 
   game.planeSpeed = normalize(mousePos.x,-.5,.5,game.planeMinSpeed, game.planeMaxSpeed);
   var targetY = normalize(mousePos.y,-.75,.75,game.planeDefaultHeight-game.planeAmpHeight, game.planeDefaultHeight+game.planeAmpHeight);
@@ -1170,6 +1182,13 @@ function init(event){
   // replayMessage = document.getElementById("replayMessage");
   // fieldLevel = document.getElementById("levelValue");
   // levelCircle = document.getElementById("levelCircleStroke");
+
+  if(window.innerWidth<900)
+  {
+    window.location.href='https://rishabhkumar.design/';
+    return;
+  }
+
 
   resetGame();
   createScene();

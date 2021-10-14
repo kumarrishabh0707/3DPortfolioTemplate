@@ -12,6 +12,12 @@
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/game.css" />
 		<script src="js/textanim.js"></script>
+		<style type="text/css">
+			* {
+		  cursor: none;
+			}
+	   </style>
+
 		<!-- <script type="module" src="./examples/jsm/loaders/FBXLoader.js"></script> -->
 
 
@@ -24,6 +30,9 @@
 		<![endif]-->
 	</head>
 	<body>
+		<div id="cursor">
+			<div class="cursor__circle"></div>
+		  </div>
 		<div class="game-holder" id="gameHolder">
 			<div class="world" id="world"></div>
 			<div class="header" style="z-index: 10;">
@@ -82,4 +91,5 @@
 		
 	</body>
 	<script src="js/textanim.js"></script>
+	<script src="js/cursor.js"></script>
 </html>
