@@ -186,22 +186,22 @@ function handleTouchMove(event) {
 
 function handleMouseUp(event){
   if (selected_screen == "Mood_Indigo") {
-    window.open('https://rishabhkumar.design/mood-indigo-interaction-design/', '_blank');
+    window.open('https://blog.rishabhkumar.design/mood-indigo-system-design/', '_blank');
   }
   else if (selected_screen == "Microsoft") {
-    window.open('https://rishabhkumar.design/insight-summer-blog/', '_blank');
+    window.open('https://blog.rishabhkumar.design/microsoft-internship-summer-blog/', '_blank');
   }
   else if (selected_screen == "Kakshasaathi") {
-    window.open('https://rishabhkumar.design/project-kakshasaathi/', '_blank');
+    window.open('https://blog.rishabhkumar.design/project-kakshasaathi/', '_blank');
   }
   else if (selected_screen == "EZWork") {
-    window.open('https://rishabhkumar.design/ezwork-service-design/', '_blank');
+    window.open('https://blog.rishabhkumar.design/ezwork-service-design/', '_blank');
   }
   else if (selected_screen == "Sailaab") {
-    window.open('https://rishabhkumar.design/sailaab/', '_blank');
+    window.open('https://blog.rishabhkumar.design/sailaab-an-ar-projection-mapping-concept/', '_blank');
   }
   else if (selected_screen == "MIDI") {
-    window.open('https://rishabhkumar.design/implementing-articulations-in-digital-music-input-through-keyboard-and-smartphone-input/', '_blank');
+    window.open('https://blog.rishabhkumar.design/implementing-articulations-in-digital-music-input-through-keyboard-and-smartphone-input/', '_blank');
   }
   else if (selected_screen == "Website") {
     window.open('https://rishabhkumar.design/', '_blank');
@@ -1185,7 +1185,7 @@ function init(event){
 
   if(window.innerWidth<900)
   {
-    window.location.href='https://rishabhkumar.design/';
+    window.location.href='https://blog.rishabhkumar.design/';
     return;
   }
 
