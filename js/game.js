@@ -1185,8 +1185,9 @@ function init(event){
 
   if(window.innerWidth<900)
   {
-    window.location.href='https://blog.rishabhkumar.design/';
-    return;
+    setTimeout(function(){document.location.href = "https://blog.rishabhkumar.design/"},10);
+    // window.location.href='https://blog.rishabhkumar.design/';
+    return true;
   }
 
 
