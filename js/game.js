@@ -204,7 +204,7 @@ function handleMouseUp(event){
     window.open('https://blog.rishabhkumar.design/implementing-articulations-in-digital-music-input-through-keyboard-and-smartphone-input/', '_blank');
   }
   else if (selected_screen == "Website") {
-    window.open('https://rishabhkumar.design/', '_blank');
+    window.open('https://blog.rishabhkumar.design/', '_blank');
   }
 }
 
