@@ -1183,13 +1183,13 @@ function init(event){
   // fieldLevel = document.getElementById("levelValue");
   // levelCircle = document.getElementById("levelCircleStroke");
 
-  if(window.innerWidth<900)
-  {
-    setTimeout(function(){document.location.href = "https://blog.rishabhkumar.design/"},5000);
+  // if(window.innerWidth<900)
+  // {
+    // setTimeout(function(){document.location.href = "https://blog.rishabhkumar.design/"},5000);
     // window.location.href='https://blog.rishabhkumar.design/';
     // window.location.replace("https://blog.rishabhkumar.design/");
-    return true;
-  }
+  //   return true;
+  // }
 
 
   resetGame();
