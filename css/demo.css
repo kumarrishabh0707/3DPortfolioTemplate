@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Teko+Web&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap');
 
 @font-face {
 	font-family: 'codropsicons';
@@ -35,7 +35,7 @@ a {
 .console-container {
  
   font-family:Teko;
-  font-weight: 800;
+  font-weight: 600;
   font-size:8em;
   text-align:center;
   height:20%;
